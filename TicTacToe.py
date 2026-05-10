@@ -6,7 +6,7 @@ class TicTacToe:
 
     def reset(self):
         self.board= np.zeros((3,3), dtype=int)
-        return self.board
+        return tuple(self.board.reshape(9))
     
     def render(self):
         print(self.board)
@@ -29,7 +29,7 @@ class TicTacToe:
             if diagonal1==-3 or diagonal2==-3:
                 return -1
             
-            if not 0 in self.board:
+            if not 0 in self.board.flatten():
                 return 0
             
         return None
@@ -41,8 +41,8 @@ class TicTacToe:
 
         if self.board[row,col] != 0:
             reward = -10
-            done= True
-            return tuple(self.board.reshape(9))
+            done= False
+            return tuple(self.board.reshape(9)),reward, done
         
         self.board[row,col]=player
 
